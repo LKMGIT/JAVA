@@ -56,7 +56,7 @@ public class MyQueue implements Queue {
         q.enqueue(3);
         q.printQueue();
 
-        q.enqueue(4); 
+        q.enqueue(4);
         q.enqueue(5);
         q.printQueue();
 
