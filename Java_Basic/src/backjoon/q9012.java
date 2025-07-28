@@ -33,7 +33,11 @@ public class q9012 {
                 if (c == '(') {
                     stack.push(c);
                 } else if (c == ')') {
-                    stack.pop();
+                    if(!stack.empty()){
+                        stack.pop();
+                    }else{
+                        System.out.println("NO");
+                    }
                 }
             }
 
