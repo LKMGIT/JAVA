@@ -20,34 +20,33 @@ import java.util.Stack;
 
 public class q9012 {
     public static void main(String[] args) {
-        Stack<Character> stack = new Stack<>();
         Scanner sc = new Scanner(System.in);
 
         int num = sc.nextInt();
         sc.nextLine();
 
         for (int i = 0; i < num; i++) {
+            Stack<Character> stack = new Stack<>();
+            boolean check = true;
             String text = sc.nextLine();
             for (int j = 0; j < text.length(); j++) {
                 char c = text.charAt(j);
                 if (c == '(') {
                     stack.push(c);
                 } else if (c == ')') {
-                    if(!stack.empty()){
+                    if (!stack.isEmpty()) {
                         stack.pop();
-                    }else{
-                        System.out.println("NO");
+                    } else {
+                        check = false;
+                        break;
                     }
                 }
             }
-
-            if (!stack.empty()) {
-                System.out.println("NO");
-            } else {
+            if (check && stack.isEmpty()) {
                 System.out.println("YES");
+            } else {
+                System.out.println("NO");
             }
         }
-
-
     }
 }
