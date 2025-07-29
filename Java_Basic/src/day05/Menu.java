@@ -7,14 +7,16 @@ import java.util.Scanner;
 public class Menu {
 
     static String name = "";   //사용자 이름 저장 변수
-    static String phone_number = ""; //사용자 번호 저장 변수
+    static String phone_number = ""; //사용자 번호 저장
 
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
 
         LinkedHashMap<String, Integer> book_list = new LinkedHashMap<>(); // 사용자 장바구니 (책이름, 수량)
+
         DecimalFormat formatter = new DecimalFormat("###,###");
+
         String book_name;  // 책 이름
         int book_count;   // 책 수량
         char check;     // 사용자 재확인
