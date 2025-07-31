@@ -1,7 +1,9 @@
 package javabasic;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class JavaBasic9 {
@@ -23,35 +25,41 @@ public class JavaBasic9 {
             System.out.print("선택 > ");
             int num = sc.nextInt();
 
-            switch (num) {
-                case 1:
-                    System.out.print("학생수> ");
-                    member = sc.nextInt();
-                    arr = new int[member];
-                    break;
-                case 2:
-                    for (int i = 0; i < member; i++) {
-                        System.out.printf("scores[%d]> ", i);
-                        arr[i] = sc.nextInt();
-                        sum += arr[i];
-                    }
-                    break;
-                case 3:
-                    for (int i = 0; i < arr.length; i++) {
-                        System.out.printf("score[%d]: %d\n", i, arr[i]);
-                    }
-                    break;
-                case 4:
-                    avg = (double) sum / member;
-                    System.out.println("총점 : " + sum);
-                    System.out.printf("평균 : %.1f\n", avg);
-                    break;
-                case 5:
-                    loop = false;
-                    break;
+            try {
+                switch (num) {
+                    case 1:
+                        System.out.print("학생수> ");
+                        member = sc.nextInt();
+                        arr = new int[member];
+                        break;
+                    case 2:
+                        for (int i = 0; i < member; i++) {
+                            System.out.printf("scores[%d]> ", i);
+                            arr[i] = sc.nextInt();
+                            sum += arr[i];
+                        }
+                        break;
+                    case 3:
+                        for (int i = 0; i < arr.length; i++) {
+                            System.out.printf("score[%d]: %d\n", i, arr[i]);
+                        }
+                        break;
+                    case 4:
+                        avg = (double) sum / member;
+                        System.out.println("총점 : " + sum);
+                        System.out.printf("평균 : %.1f\n", avg);
+                        break;
+                    case 5:
+                        loop = false;
+                        break;
 
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("숫자를 입력해야 합니다!");
+                sc.nextLine(); // 입력 버퍼 비움
+            }catch (Exception e ){
+                e.printStackTrace();
             }
-
 
         }
         System.out.println("종료");

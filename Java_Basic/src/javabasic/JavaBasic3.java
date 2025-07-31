@@ -2,12 +2,6 @@ package javabasic;
 
 public class JavaBasic3 {
 
-    public static int roll_dice(){
-
-
-
-        return 1;
-    }
 
     public static void main(String[] args) {
 
