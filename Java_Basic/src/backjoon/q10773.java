@@ -10,22 +10,22 @@ public class q10773 {
         Scanner sc = new Scanner(System.in);
 
         int num = sc.nextInt();
+        int sum = 0;
 
         for(int i = 0; i< num; i ++ )  {
             int s_num = sc.nextInt();
-            if(s_num == 0){
+            if(s_num == 0 && !stack.isEmpty()){
                 stack.pop();
             }else{
                 stack.push(s_num);
             }
         }
 
-
-
         for(int s : stack){
-
+            sum += s;
         }
 
+        System.out.println(sum);
 
     }
 }
