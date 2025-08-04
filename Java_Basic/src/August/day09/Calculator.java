@@ -48,15 +48,18 @@ public class Calculator {
 
     }
 
+    static void input(){
+        String input = sc.nextLine();
+        String[] data = input.split(" ");
+        calculator(data);
+    }
+
     public static void main(String[] args) {
 
         while (loop) {
             try {
                 screen_print();
-                String input = sc.nextLine();
-                String[] data = input.split(" ");
-                calculator(data);
-
+                input();
             } catch (InputMismatchException e) {
                 System.out.println("숫자를 입력하세요.");
                 sc.nextLine();
