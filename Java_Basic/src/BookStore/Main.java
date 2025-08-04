@@ -5,13 +5,15 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
-    static boolean loop = true; // 반복문 제어 변수
-    static Scanner sc = new Scanner(System.in);
-    static ArrayList<Book> bookArrayList = new ArrayList<>();
-
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         Cart myCart = new Cart();
+        ArrayList<Book> bookArrayList = new ArrayList<>();
+
         Input_Member input_member = new Input_Member();
+
+        boolean loop = true;
+
         Member member = input_member.input_name_phone(sc);
 
         while (loop) {
