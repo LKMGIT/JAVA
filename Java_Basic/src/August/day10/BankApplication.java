@@ -6,10 +6,11 @@ import java.util.Scanner;
 
 public class BankApplication {
     public static void main(String[] args) {
+
         Scanner sc = new Scanner(System.in);
         ArrayList<Account> accounts = new ArrayList<>();
-
         Bank bank = new Bank();
+
         boolean loop = true;
         int input;
 
@@ -29,11 +30,12 @@ public class BankApplication {
             }
 
             System.out.println("이용해주셔서 감사합니다 :)");
-        }catch (InputMismatchException e){
+        } catch (InputMismatchException e) {
             System.out.println("입력이 올바르지 않습니다.");
             sc.nextLine();
-        }catch (Exception e){
-            System.out.println("오류 발생! " +e.getMessage());
+        } catch (Exception e) {
+            System.out.println("오류 발생! " + e.getMessage());
+            sc.nextLine();
         }
 
     }

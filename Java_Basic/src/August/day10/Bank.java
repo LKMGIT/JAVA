@@ -5,10 +5,6 @@ import java.util.Scanner;
 
 public class Bank {
 
-    String account_name;
-    String account_number;
-    int balance;
-
     //화면 출력
     public void print_screen() {
         System.out.println("""
@@ -27,15 +23,15 @@ public class Bank {
                 ----------""");
 
         System.out.print("계좌번호: ");
-        account_number = sc.nextLine();
+        String account_number = sc.nextLine();
         account.setAccount_number(account_number);
 
         System.out.print("계좌주: ");
-        account_name = sc.nextLine();
+        String account_name = sc.nextLine();
         account.setAccount_name(account_name);
 
         System.out.print("초기입금액: ");
-        balance = Integer.parseInt(sc.nextLine());
+        int balance = Integer.parseInt(sc.nextLine());
         account.setBalance(balance);
 
         System.out.println("계좌가 생성되었습니다.");
@@ -49,7 +45,7 @@ public class Bank {
                 ----------""");
 
         for (Account a : accounts) {
-            if(a != null){
+            if (a != null) {
                 System.out.println(a);
             }
         }
@@ -65,10 +61,10 @@ public class Bank {
                 ----------""");
 
         System.out.print("계좌번호: ");
-        account_number = sc.nextLine();
+        String account_number = sc.nextLine();
 
         System.out.print("예금액: ");
-        balance = sc.nextInt();
+        int balance = sc.nextInt();
         sc.nextLine();
 
         for (Account a : accounts) {
@@ -94,10 +90,10 @@ public class Bank {
 
 
         System.out.print("계좌번호: ");
-        account_number = sc.nextLine();
+        String account_number = sc.nextLine();
 
         System.out.print("출금액: ");
-        balance = sc.nextInt();
+        int balance = sc.nextInt();
         sc.nextLine();
 
         for (Account a : accounts) {
@@ -114,26 +110,8 @@ public class Bank {
 
     }
 
-    public boolean Exit(){
+    public boolean Exit() {
         return false;
     }
 
-
-    //    public static void main(String[] args) {
-////        Account account = new Account();
-////
-////        account.setBalance(10000);
-////        System.out.println("현재 잔고: " + account.getBalance());
-////
-////        account.setBalance(-100);
-////        System.out.println("현재 잔고: " + account.getBalance());
-////
-////
-////        account.setBalance(2000000);
-////        System.out.println("현재 잔고: " + account.getBalance());
-////
-////        account.setBalance(300000);
-////        System.out.println("현재 잔고: " + account.getBalance());
-//
-//    }
 }
