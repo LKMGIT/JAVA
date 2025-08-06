@@ -1,4 +1,4 @@
-package August.day11;
+package August.day11.Inheritance_1;
 
 public class CC extends BB{
     private int dd = 40;

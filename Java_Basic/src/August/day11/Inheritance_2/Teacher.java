@@ -1,10 +1,9 @@
-package August.day11;
+package August.day11.Inheritance_2;
 
-public class Employee {
-
+public class Teacher {
     private String name;
     private int age;
-    private String dept;
+    private String subject;
 
     public String getName() {
         return name;
@@ -14,8 +13,8 @@ public class Employee {
         return age;
     }
 
-    public String getDept() {
-        return dept;
+    public String getSubject() {
+        return subject;
     }
 
     public void setName(String name) {
@@ -26,11 +25,11 @@ public class Employee {
         this.age = age;
     }
 
-    public void setDept(String dept) {
-        this.dept = dept;
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     public void print(){
-        System.out.printf("이  름 : %s   나  이 : %d   부   서 :  %s\n", name, age,dept);
+        System.out.printf("이  름 : %s   나  이 : %d   담당과목 :  %s\n", name, age,subject);
     }
 }

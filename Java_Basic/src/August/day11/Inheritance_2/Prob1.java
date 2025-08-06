@@ -1,4 +1,4 @@
-package August.day11;
+package August.day11.Inheritance_2;
 
 public class Prob1 {
     public static void main(String[] args) {

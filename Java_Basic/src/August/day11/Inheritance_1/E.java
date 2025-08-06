@@ -1,4 +1,4 @@
-package August.day11;
+package August.day11.Inheritance_1;
 
 public class E extends B{
 

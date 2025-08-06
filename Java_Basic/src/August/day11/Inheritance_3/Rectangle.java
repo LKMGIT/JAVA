@@ -1,4 +1,4 @@
-package August.day11;
+package August.day11.Inheritance_3;
 
 public class Rectangle {
     private int width;
