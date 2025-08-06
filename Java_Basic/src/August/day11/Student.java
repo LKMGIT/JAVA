@@ -1,9 +1,9 @@
 package August.day11;
 
 public class Student {
-    String name;
-    int age;
-    int id;
+    private String name;
+    private int age;
+    private int id;
 
     public String getName() {
         return name;

@@ -2,8 +2,8 @@ package August.day11;
 
 public class Movie {
 
-    String title;
-    String genre;
+    private String title;
+    private String genre;
 
     public String getTitle() {
         return title;

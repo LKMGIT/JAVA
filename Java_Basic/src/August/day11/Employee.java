@@ -2,9 +2,9 @@ package August.day11;
 
 public class Employee {
 
-    String name;
-    int age;
-    String dept;
+    private String name;
+    private int age;
+    private String dept;
 
     public String getName() {
         return name;
