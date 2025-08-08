@@ -2,7 +2,6 @@ package August.day12.Task03;
 
 public class Bike extends Wheeler{
 
-    public int wheelNumber;
 
     public Bike(String carName, int velocity, int wheelNumber) {
         super(velocity, carName);

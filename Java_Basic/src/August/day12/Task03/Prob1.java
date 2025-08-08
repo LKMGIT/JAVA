@@ -8,8 +8,7 @@ public static void main(String[] args) {
 	wheelers[0] = truck;
 	wheelers[1] = bike;
 	System.out.println(wheelers[0].carName + " : 바퀴 " + wheelers[0].wheelNumber + "개입니다");
-	System.out.println(wheelers[1].carName + " : 바퀴 " + wheelers[1].wheelNumber + "개입니다");	
-	wheelers[1] = bike;	
+	System.out.println(wheelers[1].carName + " : 바퀴 " + wheelers[1].wheelNumber + "개입니다");
 
 	for(int i = 0; i < 2; i++){
 		wheelers[0].speedUp(10);

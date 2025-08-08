@@ -6,6 +6,7 @@ public abstract class Wheeler {
 
     protected String carName;
 
+    protected int wheelNumber;
 
     public Wheeler(int velocity, String carName) {
         this.velocity = velocity;
