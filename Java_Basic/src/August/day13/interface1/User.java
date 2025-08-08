@@ -16,5 +16,6 @@ public class User {
 
         rc.setVolume(10);
         rc.setMute(true);
+        RemoteControl.changeBattety();
     }
 }
