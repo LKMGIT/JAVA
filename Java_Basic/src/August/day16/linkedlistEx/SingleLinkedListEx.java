@@ -57,23 +57,27 @@ public class SingleLinkedListEx<T> {
     }
 
     public boolean deleteNode(T isData) {
-        if (head != null) {
+        if(head == null) {
+            return false;
+        }else {
             Node<T> node = this.head;
-            if (node.data == isData) {
-                head = null;
+            if(node.data == isData) {
+                this.head = null;
                 return true;
-            } else {
-                while (node.next != null) {
-                    if (node.next.data == isData) {
-                        node.next = node.next.next;
-                        node.next.next = null;
-                    } else {
-                        node = node.next;
+            }else{
+                while(node.next != null) {
+                    if(node.next.data == isData) {
+                        Node<T> node2 = node.next;
+                        node.next = node2.next;
+                        node2.next = null;
+                        return true;
                     }
                 }
             }
         }
+        return false;
     }
+
 
     public void printAll() {
         if (head != null) { // 그냥 바로 헤드에서 시작하면 안되나
@@ -89,15 +93,26 @@ public class SingleLinkedListEx<T> {
     public static void main(String[] args) {
         SingleLinkedListEx<Integer> myLinkedList = new SingleLinkedListEx<>();
 
-
         myLinkedList.addNode(1);
         myLinkedList.addNode(2);
         myLinkedList.addNode(3);
         myLinkedList.addNode(4);
         myLinkedList.addNode(5);
 
-        System.out.println(myLinkedList.head.data);
-        System.out.println(myLinkedList.head.next.data);
+        myLinkedList.printAll();
+        System.out.println("");
+
+        System.out.println(myLinkedList.search(4).data);
+        System.out.println("");
+
+        myLinkedList.addNodeInside(3,4);
+
+        myLinkedList.printAll();
+        System.out.println("");
+
+        myLinkedList.deleteNode(2);
+        myLinkedList.printAll();
+
 
     }
 
