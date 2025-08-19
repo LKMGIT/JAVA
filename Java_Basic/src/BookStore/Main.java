@@ -1,5 +1,8 @@
 package BookStore;
 
+import BookStore.Entity.Book;
+import BookStore.Entity.Member;
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;

@@ -1,5 +1,7 @@
 package BookStore;
 
+import BookStore.Entity.Member;
+
 import java.util.Scanner;
 
 public class Input_Member {

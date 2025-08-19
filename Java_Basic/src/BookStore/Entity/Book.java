@@ -1,4 +1,4 @@
-package BookStore;
+package BookStore.Entity;
 
 public class Book {
 
