@@ -54,7 +54,6 @@ public class BoardManager implements Board_interface {
         System.out.println(">> 모든 게시물을 삭제했습니다.");
     }
 
-    // 목록 출력을 위한 접근자 (인터페이스에는 노출하지 않음)
     public List<Board> getBoards() {
         return boards;
     }

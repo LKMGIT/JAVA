@@ -1,9 +1,9 @@
 package BookStore.Entity;
 
-public class Admin {
+public class Admin extends Person {
 
-    private String admin_name;
-    private String admin_password;
+    private String admin_name = "admin";
+    private String admin_password = "admin1234";
 
     public Admin(String admin_name, String admin_password) {
         this.admin_name = admin_name;
