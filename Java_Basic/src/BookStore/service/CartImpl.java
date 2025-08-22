@@ -1,17 +1,15 @@
 package BookStore.service;
 
 import BookStore.Entity.Book;
+import BookStore.Entity.CartItem;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/*
 public class CartImpl implements Cart_interface{
 
-    String book_name = " ";
-    int book_count = 0;
     Book targetBook = null;
-    char check = ' ';
-    List<Book> books = new ArrayList<Book>();
+    List<CartItem> carts = new ArrayList<>();
 
     //바구니 항목 추가 메서드
     public void menuCartAddItem(Book book) {
@@ -65,3 +63,4 @@ public class CartImpl implements Cart_interface{
     }
 
 }
+*/

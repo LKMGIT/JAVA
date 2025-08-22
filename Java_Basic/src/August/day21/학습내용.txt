@@ -1,0 +1,22 @@
+요소변환(매핑)
+중간연산
+매핑-> 스트림의 요소를 다른 요소로 변환시키는 기능
+
+매핑메서드
+mapXxx()  mapToInt() asDoubleStream()
+asLongStream(),boxted(),flatMapXxx()...
+
+중간연산은 스트림을 다른 스트림으로 변환하는 연산이다.
+filter() - 지정된 조건과 일치하는 요소를 스트림에서 선택하는데 사용됨
+
+개발자들을 괴롭히는 NULL
+1. null의 정의
+    특정한 데이터 값이 없다.
+2. Null 과 첨조형 빌드와 관계
+    기본타입 X 0 X false X
+    참조타입의 초기값을 null
+3. Null과 static 키워드
+4. Null과 instanceof
+5. NullPointerException
+    null을 참조하는 레
+
