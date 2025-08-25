@@ -27,8 +27,8 @@ public class Prob06 {
                 new Person("Eve",35)
                 );
 
-        Map<String, List<Person>> map = numbers.stream().collect(Collectors.groupingBy(Person::getName));
-        System.out.println(map.get());
+        Map<Integer, List<Person>> map = numbers.stream().collect(Collectors.groupingBy(Person::getAge));
+        System.out.println(map.entrySet());
 
     }
 }

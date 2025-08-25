@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor
@@ -26,5 +27,8 @@ public class Prob08 {
                 new Employee("Jim","Sales",8500)
 
         );
+
+
+
     }
 }

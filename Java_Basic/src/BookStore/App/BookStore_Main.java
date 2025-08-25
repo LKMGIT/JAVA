@@ -1,5 +1,6 @@
 package BookStore.App;
-/*
+
+import BookStore.Entity.CartItem;
 import BookStore.service.CartImpl;
 import BookStore.Entity.Book;
 import BookStore.service.UserImpl;
@@ -62,8 +63,8 @@ public class BookStore_Main {
                     System.out.print("추가할 수량");
                     book_count = sc.nextInt();
                     sc.nextLine();
-                    Book book = new Book(book_name, book_count);
-                    myCartImpl.menuCartAddItem(book);
+                    CartItem cart = new CartItem(book_name, book_count);
+                    myCartImpl.menuCartAddItem(cart);
                     break;
                 case 5:
                     System.out.print("수량 줄일 책의 제목:");
@@ -91,4 +92,3 @@ public class BookStore_Main {
     }
 
 }
-*/
