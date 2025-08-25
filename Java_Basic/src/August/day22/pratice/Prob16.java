@@ -45,6 +45,7 @@ public class Prob16 {
             e.printStackTrace();
         }
 
+        Arrays.sort(studentArray);
         System.out.println(Arrays.toString(studentArray));
         double total = 0;
         double avg = 0;
