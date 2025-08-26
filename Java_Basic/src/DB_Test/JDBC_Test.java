@@ -1,5 +1,5 @@
 
-package August.day22;
+package DB_Test;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
