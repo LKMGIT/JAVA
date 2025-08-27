@@ -40,4 +40,45 @@ server.bind(new InetSocketAddress(50001));     // 서버 컴퓨터에 여러 포
 Socket socket = new Socket("IP", 50001);
 
 
+============================================================
+데이터 주고 받기
+클라이언트가 연결 요청(Connect())을 하고 서버가 연결 수락 (accept())를 했다면
+양쪽의 socket 객체가 각각 입력 스트림과 출력 스크림을 얻을 수 있다.
+
+======데이터를 보낼 때 =========
+
+상대방에게 데이터를 보낼 때에는 byte[] 를 생성하고 이것을 매개 값으로 해서 OutputStream에 write 메소드를 이용하여 UTF-8으로 인코딩 하여 전송한다.
+
+방법1.
+String data = "클라이언트가 서버로 보낼 데이터"
+byte[] bytes = data.getBytes("UTF-8);
+OutputStream os = socket.getOutputStream();
+os.write(bytes);
+os.flush();
+
+방법 2.
+String data = "클라이언트가 서버로 보낼 데이터"
+DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+os.write(bytes);
+os.flush();
+
+
+===== 읽기 로직 ( 데이터를 받을 때) ========
+받은 데이터를 저장할 byte[] 를 하나 생성
+이걸 매개값으로 해서 InputStream의 read() 메소드를 호출해서 읽어야지
+read() 메소드는 읽은 데이터를 byte[] 배열에ㅔ 저장하고 읽은 바이트 수를 리턴 한다
+UTF-8으로 인코딩 해야함
+
+byte[] bytes = new byte[1024];
+
+방법 1.
+InputStream is = socket.getInputStream();
+int number = is.read(bytes);
+String data = new String(bytes, 0, number, "UTF-8");
+
+방법 2.
+//상대방이 DataOutputStream으로 문자열을 보낼 때만 DataInputStream으로 읽을 수 있다.
+DataInputStream dis = new DataInputStream(socket.getInputStream());
+String data = dis.readUTF();
+
 
