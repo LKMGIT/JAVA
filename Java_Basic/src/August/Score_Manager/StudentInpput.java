@@ -1,24 +1,16 @@
 package August.Score_Manager;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
 public class StudentInpput {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
-        boolean flag = true;
-        while (flag) {
+        InputImpl iimpl = new InputImpl();
 
-
-
+        iimpl.printUsage();
+        if (iimpl.loadCheck()) {
+            iimpl.checkKeyAndInputData();
+            iimpl.saveData();
+        } else {
+            System.out.println("파일 오류");
         }
-
-
     }
-
-
-
-
-
-
 }

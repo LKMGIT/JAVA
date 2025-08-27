@@ -8,19 +8,21 @@ import java.util.List;
 public class InputImpl implements InputInterface {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     HashMap<String, Student> studentInfo = new HashMap<>();
-    File file = new File("C:/Temp/student.dat");
+    String path = "C:/Temp/student.dat";
+    File file = new File(path);
     List<Student> students = new ArrayList<>();
 
     // 사용자 정보 입력 후 Map에 저장, 화면에 출력
     public void checkKeyAndInputData() throws IOException {
         while (true) {
             Student student = new Student();
-
             System.out.print("이름: ");
             String name = br.readLine();
             if (studentInfo.containsKey(name)) {
                 System.out.println("이름이 중복입니다. ");
                 continue;
+            }else if (name.equals("^^")) {
+                break;
             }
 
             System.out.print("국어: ");
@@ -41,9 +43,14 @@ public class InputImpl implements InputInterface {
 
             System.out.print("과학: ");
             int science_score = Integer.parseInt(br.readLine());
-            if(! checkScore(math_score)) {
+            if(! checkScore(science_score)) {
                 continue;
             }
+            student.setName(name);
+            student.recode.add(len_score);
+            student.recode.add(math_score);
+            student.recode.add(english_score);
+            student.recode.add(science_score);
 
             student.cal_total();
             student.cal_average();
@@ -56,7 +63,7 @@ public class InputImpl implements InputInterface {
 
     }
 
-    public boolean loadCheck() {
+    public boolean loadCheck() throws FileNotFoundException {
         if (file.exists()) {
             System.out.println("파일 존재");
             return true;
@@ -74,9 +81,11 @@ public class InputImpl implements InputInterface {
                 """);
     }
 
-    @Override
-    public void saveData() {
-
+    public void saveData() throws IOException{
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("C:/Temp/student.dat"));
+        out.writeObject(studentInfo);
+        System.out.println("[완료] " + studentInfo.size() + "명의 정보가 student.dat 에 저장되었습니다.");
+        out.close();
     }
 
     public boolean checkScore(int score){

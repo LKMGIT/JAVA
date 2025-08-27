@@ -3,6 +3,7 @@ package August.Score_Manager;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
 public class Student implements Serializable {
     private static final long serialVersionUID = 1L;
     private String name;                // 학생 이름
-    List<Integer> recode;               // 점수 배열
+    List<Integer> recode = new ArrayList<>();               // 점수 배열
     private int total;                  // 총합 점수
     private float average;              // 점수 평균
     private String grade;              // 학생 학점

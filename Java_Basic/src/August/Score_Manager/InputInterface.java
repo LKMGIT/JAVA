@@ -1,8 +1,8 @@
 package August.Score_Manager;
 
 public interface InputInterface {
-    public boolean loadCheck();
+    public boolean loadCheck() throws Exception;
     public void printUsage();
-    public void saveData();
+    public void saveData() throws Exception;
     public void checkKeyAndInputData() throws Exception;
 }
