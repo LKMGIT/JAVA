@@ -9,23 +9,29 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class MultiEchoServer {
     private static final int PORT = 5000;
+
+    // ExecutorService는 작업을 스레드 풀에 맡기는 인터페이스.    Executors.newCachedThreadPool();   는 자바에서 필요시 스레드를 추가생성하거나 재사용 하게 해주는 메소드
     private static final ExecutorService POOL = Executors.newCachedThreadPool();
+
+    // 스레드가 안전하게 카운터를 증가시키기 위한 작업
     private static final AtomicInteger CLIENT_SEQ = new AtomicInteger(1);
 
     public static void main(String[] args) {
+        // 포트 번호 출력
         System.out.println("[Server] Starting on port " + PORT);
         // Ctrl+C 시 스레드 풀 정리
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {  // addShutdownHook 이 Ctrl + C 누르면 시작함
             System.out.println("\n[Server] Shutting down...");
             POOL.shutdownNow();
         }));
 
+        // 서버 소켓 만들기
         try (ServerSocket serverSocket = new ServerSocket(PORT)) {
             while (true) {
-                Socket socket = serverSocket.accept();
-                int id = CLIENT_SEQ.getAndIncrement();
-                System.out.println("[Server] Client#" + id + " connected from " + socket.getRemoteSocketAddress());
-                POOL.submit(new ClientHandler(socket, id));
+                Socket socket = serverSocket.accept();  // 클라이언트 입장 대기
+                int id = CLIENT_SEQ.getAndIncrement(); // 클라이언트 ID 자동 증가
+                System.out.println("[Server] Client#" + id + " connected from " + socket.getRemoteSocketAddress()); // 클라이언트 번호와 주소 출력
+                POOL.submit(new ClientHandler(socket, id));  // 스레드 풀에 클라리언트 추가
             }
         } catch (IOException e) {
             System.err.println("[Server] Error: " + e.getMessage());
