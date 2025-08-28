@@ -15,7 +15,7 @@ public class Thread01 {
             @Override
             public void run() {
                 System.out.println(getName() + "실행");
-                
+
             }
         };
         chat_thread1.setName("chatting-thread");

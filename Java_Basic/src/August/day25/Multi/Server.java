@@ -4,85 +4,134 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Server {
 
-    //일단 포트번호 선언
     static final private int PORT = 5000;
-    // 스레드 풀 선언
-    static final private ExecutorService POOL = Executors.newCachedThreadPool();  // newCachedThreadPool로 알아서 스레드  생성
-    // 증가값 선언
-    static final private AtomicInteger CLIENT_SEQ = new AtomicInteger(1);  // 증가 1로 설정
+    static final private ExecutorService POOL = Executors.newCachedThreadPool();
+    static final private AtomicInteger CLIENT_SEQ = new AtomicInteger(1);
+
+    // 동시 접근 안전한 컬렉션 사용
+    private static final List<String> NAMES = new CopyOnWriteArrayList<>();
+    private static final List<ClientHandler> CLIENTS = new CopyOnWriteArrayList<>();
 
     public static void main(String[] args) throws Exception {
-
-        //서버를 실행.
         System.out.println("[서버] 서버 시작");
-        // 서버 소켓 생성
         ServerSocket serverSocket = new ServerSocket(PORT);
 
-        //Ctrl + C 입력시 종료
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {  // addShutdownHook 이 Ctrl + C 누르면 시작함
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("\n[서버] 서버 종료...");
             POOL.shutdownNow();
         }));
 
         while (true) {
-            Socket Client_socket = serverSocket.accept();  // 클라이언트 입장 대기
-            int seq = CLIENT_SEQ.getAndIncrement(); // 클라이언트 번호 증가 getAndIncrement()는 후위증가
-            //클라이언트 인자값 받아서 스레드풀에 넣기
-            POOL.submit(new ClientHandler(Client_socket, seq));  // Runnable 인터페이스 타입을 스레드 풀에 저장하는 submit() 메소드
+            Socket clientSocket = serverSocket.accept();
+            System.out.println("[서버] 클라이언트와 연결되었습니다.");
+            int seq = CLIENT_SEQ.getAndIncrement();
+            POOL.submit(new ClientHandler(clientSocket, seq));
         }
     }
 
-    // 클라이언트 입장, 닉네임 처리
-    public static class ClientHandler implements Runnable {
-        List<String> names = new ArrayList<>();
-        private final Socket Client_socket;
-        private final int sequence;
+    // 전체에게 전송
+    static void broadcast(String message) {
+        for (ClientHandler ch : CLIENTS) ch.send(message);
+    }
 
-        public ClientHandler(Socket client_socket, int sequence) {
-            Client_socket = client_socket;
+    // 보낸 사람 제외 전송
+    static void broadcastExcept(String message, ClientHandler except) {
+        for (ClientHandler ch : CLIENTS) if (ch != except) ch.send(message);
+    }
+
+    // ----------------- 핸들러 -----------------
+    public static class ClientHandler implements Runnable {
+        private final Socket socket;
+        private final int sequence;
+        private BufferedReader in;
+        private PrintWriter out;
+        private String name = "user-" + System.currentTimeMillis();
+
+        public ClientHandler(Socket socket, int sequence) {
+            this.socket = socket;
             this.sequence = sequence;
         }
 
         @Override
         public void run() {
-            try (
-                    // 클라이언트의 입력을 받기 위한 BufferedReader
-                    BufferedReader in = new BufferedReader(
-                            new InputStreamReader(Client_socket.getInputStream(), StandardCharsets.UTF_8)
-                    );
+            try {
+                in = new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
+                out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), StandardCharsets.UTF_8), true);
 
-                    // 서버가 클라이언트 들에게 전달하기 위한 PrintWriter
-                    PrintWriter out = new PrintWriter(
-                            new OutputStreamWriter(Client_socket.getOutputStream(), StandardCharsets.UTF_8), true
-                    );
-            ) {
+                // 닉네임 수신 및 등록
+                String clientName = in.readLine();
+                if (clientName == null || clientName.isBlank()) {
+                    out.println("닉네임이 올바르지 않습니다. 연결을 종료합니다.");
+                    return;
+                }
+                // 중복 체크(단순 거부)
+                if (NAMES.contains(clientName)) {
+                    out.println("이미 존재하는 닉네임입니다. 다른 이름으로 접속하세요.");
+                    return;
+                }
+                this.name = clientName;
 
-                // 클아이언트의 닉네임 받기
-                while (true) {
-                    String Client_name = in.readLine(); // 클라이언트 닉네임 받기
-                    if (names.contains(Client_name)) { // 입력한 이름이 names 리스트에 존재하면
-                        System.out.println("이름이 중복입니다."); // 중복 알림
-                    } else {
-                        // 중복이 아니면 인사 출력 및 리스트에 저장
-                        out.println(Client_name + "반갑습니다!!" + "exit를 입력하시면 종료됩니다.");
-                        names.add(Client_name);
-                        break;
+                NAMES.add(name);
+                CLIENTS.add(this);
+
+                out.println(name + "님 반갑습니다! (/quit 종료)");
+                Server.broadcast("[서버] " + name + "님 입장. 현재 " + NAMES.size() + "명");
+
+                // 명령 처리 루프
+                String clientMessage;
+                while ((clientMessage = in.readLine()) != null) {
+                    System.out.println("[서버] 수신: " + clientMessage);
+
+                    switch (clientMessage) {
+                        case "/quit" -> {
+                            out.println(name + "님 안녕히 가세요.");
+                            return; // finally에서 정리
+                        }
+                        case "/who" -> {
+                            out.println("현재 접속 인원: " + NAMES.size() + "명: " + String.join(", ", NAMES));
+                        }
+                        case "/text" -> {
+                            out.println("메시지를 입력하세요:");
+                            String msg = in.readLine();
+                            if (msg != null && !msg.isBlank()) {
+                                // 보낸 사람 제외 전체 방송
+                                Server.broadcastExcept("[" + name + "] " + msg, this);
+                                // 보낸 사람에게 확인
+                                out.println("전송되었습니다.");
+                            } else {
+                                out.println("빈 메시지는 전송되지 않습니다.");
+                            }
+                        }
+                        default -> out.println("알 수 없는 명령입니다.");
                     }
                 }
+            } catch (IOException ignored) {
+            } finally {
+                // 정리
+                CLIENTS.remove(this);
+                NAMES.remove(this.name);
+                Server.broadcast("[서버] " + name + "님 퇴장. 현재 " + NAMES.size() + "명");
+                try { socket.close(); } catch (IOException ignore) {}
+            }
+        }
 
-
-
-
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+        // 개별 전송(충돌 방지)
+        void send(String message) {
+            synchronized (out) {
+                out.println(message);
+                if (out.checkError()) {
+                    CLIENTS.remove(this);
+                    NAMES.remove(this.name);
+                    try { socket.close(); } catch (IOException ignore) {}
+                }
             }
         }
     }
