@@ -12,27 +12,35 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Server {
 
-    static final private int PORT = 5000;
-    static final private ExecutorService POOL = Executors.newCachedThreadPool();
+    static final private int PORT = 5000;  // 포트번호 설정 
+    // 다중 접속을 TreadPool로 관리
+    static final private ExecutorService POOL = Executors.newCachedThreadPool();  
+    // 사용자 번호 자동 증가
     static final private AtomicInteger CLIENT_SEQ = new AtomicInteger(1);
 
-    // 동시 접근 안전한 컬렉션 사용
+    // 사용자 이름을 저장할 List
     private static final List<String> NAMES = new CopyOnWriteArrayList<>();
+    // 클라이언트를 관리할 List
     private static final List<ClientHandler> CLIENTS = new CopyOnWriteArrayList<>();
 
     public static void main(String[] args) throws Exception {
         System.out.println("[서버] 서버 시작");
+        //서버 소켓 생성
         ServerSocket serverSocket = new ServerSocket(PORT);
 
+        // Ctrl + C 입력시 종료 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             System.out.println("\n[서버] 서버 종료...");
             POOL.shutdownNow();
         }));
 
         while (true) {
+            // 클라이언트 연결 기다리기
             Socket clientSocket = serverSocket.accept();
             System.out.println("[서버] 클라이언트와 연결되었습니다.");
             int seq = CLIENT_SEQ.getAndIncrement();
+            
+            //스레드 풀에 클라이언트 정보 저장
             POOL.submit(new ClientHandler(clientSocket, seq));
         }
     }
@@ -47,7 +55,7 @@ public class Server {
         for (ClientHandler ch : CLIENTS) if (ch != except) ch.send(message);
     }
 
-    // ----------------- 핸들러 -----------------
+
     public static class ClientHandler implements Runnable {
         private final Socket socket;
         private final int sequence;
