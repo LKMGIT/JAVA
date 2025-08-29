@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
-public class Client {
+public class Client2 {
     public static void main(String[] args) {
         String host = "localhost";
         int port = 5000;
