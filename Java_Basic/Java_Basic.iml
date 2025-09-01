@@ -16,5 +16,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="json-20250517" level="project" />
+    <orderEntry type="library" name="lombok-1.18.38" level="project" />
   </component>
 </module>

@@ -1,10 +1,9 @@
-package August.Score_Manager;
+package August.Score_Manager.Entity;
 
 import lombok.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @AllArgsConstructor

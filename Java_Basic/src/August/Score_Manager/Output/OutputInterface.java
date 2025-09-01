@@ -1,6 +1,6 @@
-package August.Score_Manager;
+package August.Score_Manager.Output;
 
-public interface InputInterface {
+public interface OutputInterface {
     public boolean loadCheck() throws Exception;
     public void printUsage();
     public void saveData() throws Exception;

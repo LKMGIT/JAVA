@@ -1,9 +1,9 @@
-package August.Score_Manager;
+package August.Score_Manager.Output;
 
-public class StudentInpput {
+public class StudentOutputMain {
     public static void main(String[] args) throws Exception {
 
-        InputImpl iimpl = new InputImpl();
+        OutImpl iimpl = new OutImpl();
 
         iimpl.printUsage();
         if (iimpl.loadCheck()) {

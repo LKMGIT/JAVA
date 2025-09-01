@@ -1,21 +1,25 @@
-package August.Score_Manager;
+package August.Score_Manager.Output;
+
+import August.Score_Manager.Entity.Student;
+import August.day13.interface3.InterfaceImpl;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class InputImpl implements InputInterface {
+public class OutImpl implements OutputInterface {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     HashMap<String, Student> studentInfo = new HashMap<>();
     String path = "C:/Temp/student.dat";
     File file = new File(path);
-    List<Student> students = new ArrayList<>();
+
 
     // 사용자 정보 입력 후 Map에 저장, 화면에 출력
     public void checkKeyAndInputData() throws IOException {
         while (true) {
             Student student = new Student();
+            List<Integer> recode = new ArrayList<>();
             System.out.print("이름: ");
             String name = br.readLine();
             if (studentInfo.containsKey(name)) {
@@ -47,10 +51,12 @@ public class InputImpl implements InputInterface {
                 continue;
             }
             student.setName(name);
-            student.recode.add(len_score);
-            student.recode.add(math_score);
-            student.recode.add(english_score);
-            student.recode.add(science_score);
+
+            recode.add(len_score);
+            recode.add(math_score);
+            recode.add(english_score);
+            recode.add(science_score);
+            student.setRecode(recode);
 
             student.cal_total();
             student.cal_average();
@@ -66,6 +72,8 @@ public class InputImpl implements InputInterface {
     public boolean loadCheck() throws FileNotFoundException {
         if (file.exists()) {
             System.out.println("파일 존재");
+            PrintStream ps = new PrintStream(file);
+            ps.print("");
             return true;
         } else {
             return file.mkdirs();
